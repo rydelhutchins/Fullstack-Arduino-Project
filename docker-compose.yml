@@ -21,7 +21,7 @@ services:
     depends_on:
       - postgres
     devices:
-      - "/dev/ttyUSB0:/dev/ttyUSB0"
+      - "/dev/cu.usbmodem2101:/dev/cu.usbmodem2101"
 
   frontend:
     build: ./frontend

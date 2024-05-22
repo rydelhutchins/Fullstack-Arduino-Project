@@ -6,7 +6,7 @@ from .db import database
 app = FastAPI()
 
 # Adjust this to your Arduino's serial port
-SERIAL_PORT = '/dev/ttyUSB0'
+SERIAL_PORT = '/dev/cu.usbmodem2101'
 BAUD_RATE = 9600
 
 # Initialize serial connection
