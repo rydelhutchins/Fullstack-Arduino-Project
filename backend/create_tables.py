@@ -1,6 +1,7 @@
+import os
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer
 
-DATABASE_URL = "postgresql://nohax:hackmebitch!@localhost:5432/nohaxdb"
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://nohax:hackmebitch!@localhost:5432/nohaxdb')
 
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()

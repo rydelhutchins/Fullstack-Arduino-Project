@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 import serial
-from .db import database
+from db import database
 
 app = FastAPI()
 
