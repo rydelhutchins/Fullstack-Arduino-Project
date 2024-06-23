@@ -1,32 +1,64 @@
-version: '3.8'
+volumes:
+  postgres-data:
+    name: postgres-data
+  pg-admin:
+    name: pg-admin
+
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    devices:
-      - "/dev/cu.usbmodem2101:/dev/cu.usbmodem2101"
-    environment:
-      - DATABASE_URL=postgresql://nohax:hackmebitch!@postgres:5432/nohaxdb
-    depends_on:
-      - postgres
-    command: sh -c "python create_tables.py && uvicorn main:app --host 0.0.0.0 --port 8000"
-
   postgres:
-    image: postgres:latest
+    image: postgres:14.5-bullseye
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: nohax
       POSTGRES_PASSWORD: hackmebitch!
       POSTGRES_DB: nohaxdb
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nohax"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-volumes:
-  postgres_data:
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql://nohax:hackmebitch!@postgres:5432/nohaxdb
+      WAIT_HOST: postgres:5432
+      WAIT_BEFORE: 5
+      WAIT_TIMEOUT: 60
+    ports:
+      - 8000:8000
+    privileged: true
+    devices:
+      - "/dev/cu.usbmodem2101:/dev/cu.usbmodem2101"
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_HOST: http://localhost:8000
+      VITE_WS_HOST: ws://localhost:8000
+    depends_on:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    volumes:
+      - pg-admin:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DISABLE_POSTFIX: 1
+    depends_on:
+      - postgres
