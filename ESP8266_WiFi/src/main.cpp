@@ -43,5 +43,5 @@ void setup() {
 }
 
 void loop() {
-    server.handleClient(); // Handle incoming client requests
+    server.handleClient();
 }
