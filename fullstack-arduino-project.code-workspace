@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "ESP8266_WiFi",
+			"path": "ESP8266_WiFi"
+		},
+		{
+			"name": "arduino",
+			"path": "arduino"
+		}
+	],
+	"settings": {}
+}
