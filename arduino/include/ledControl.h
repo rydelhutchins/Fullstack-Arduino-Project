@@ -3,5 +3,6 @@
 
 void ledOn(int ledPin);
 void ledOff(int ledPin);
+void blinkLED(int ledPin, int frequency);
 
-#endif // LED_CONTROL_H
+#endif
