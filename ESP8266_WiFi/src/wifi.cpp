@@ -4,7 +4,7 @@
 const char* ssid = "MagicWifi_Guest";
 const char* password = "houseguest";
 
-// Define the function to connect to WiFi
+
 void connectToWiFi() {
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {

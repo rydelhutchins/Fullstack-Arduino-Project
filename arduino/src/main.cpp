@@ -22,12 +22,3 @@ void loop() {
         }
     }
 }
-
-void blinkLED(int frequency) {
-    if (frequency > 0) {
-        int delayTime = 1000 / frequency; // Calculate the delay time based on the frequency
-        ledOn(ledPin);
-        delay(delayTime / 2);
-        ledOff(delayTime / 2);
-    }
-}
