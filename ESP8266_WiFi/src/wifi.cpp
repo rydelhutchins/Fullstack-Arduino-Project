@@ -1,8 +1,8 @@
 #include "wifi.h"
 
 // Define your WiFi credentials
-const char* ssid = "MagicWifi";
-const char* password = "&75eq1hh671D!";
+const char* ssid = "MagicWifi_Guest";
+const char* password = "houseguest";
 
 // Define the function to connect to WiFi
 void connectToWiFi() {
